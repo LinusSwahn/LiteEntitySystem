@@ -8,19 +8,19 @@ namespace LiteEntitySystem.Internal
         /// <summary>
         /// Entity class id
         /// </summary>
-        public readonly ushort ClassId;
+        public ushort ClassId;
         
         /// <summary>
         /// Entity instance id
         /// </summary>
-        public readonly ushort Id;
+        public ushort Id;
         
         /// <summary>
         /// Entity manager
         /// </summary>
-        public readonly EntityManager EntityManager;
+        public EntityManager EntityManager;
         
-        internal readonly byte Version;
+        internal byte Version;
         
         [SyncVarFlags(SyncFlags.NeverRollBack)]
         private SyncVar<bool> _isDestroyed;
@@ -214,6 +214,11 @@ namespace LiteEntitySystem.Internal
         }
 
         protected InternalEntity(EntityParams entityParams)
+        {
+            UpdateEntityParams(entityParams);
+        }
+        
+        public void UpdateEntityParams(EntityParams entityParams)
         {
             EntityManager = entityParams.EntityManager;
             Id = entityParams.Id;
