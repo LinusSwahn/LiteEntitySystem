@@ -26,34 +26,4 @@
     <ItemGroup>
       <ProjectReference Include="..\..\LiteNetLib\LiteNetLib\LiteNetLib.csproj" />
     </ItemGroup>
-
-
-    <PropertyGroup>
-        <!-- Define the destination path -->
-        <UnityCodePath>../../../Unity/InfiniteStellar/Assets/Code/ThirdParty/LiteEntitySystem</UnityCodePath>
-    </PropertyGroup>
-
-    <Target Name="CopyToUnity" AfterTargets="Build">
-        <!-- Delete existing .cs files and folders in the target directory -->
-        <Delete Files="$(UnityCodePath)\**\*.cs"/>
-        <ItemGroup>
-            <!-- Gather a list of empty directories -->
-            <EmptyDirectories Include="$(UnityCodePath)\**\*"/>
-        </ItemGroup>
-        <!-- Remove empty directories -->
-        <RemoveDir Directories="@(EmptyDirectories)" Condition="!Exists('%(EmptyDirectories.Identity)\*.*')"/>
-
-        <!-- Ensure the destination directory exists -->
-        <MakeDir Directories="$(UnityCodePath)"/>
-
-        <ItemGroup>
-            <GeneratedFiles Include="$(BaseIntermediateOutputPath)Generated\**\*.cs" />
-        </ItemGroup>
-
-        <!-- Copy all .cs files to the Unity directory, maintaining folder structure -->
-        <Copy
-                SourceFiles="@(Compile);@(GeneratedFiles)"
-                DestinationFiles="@(Compile->'$(UnityCodePath)\%(RecursiveDir)%(Filename)%(Extension)');@(GeneratedFiles->'$(UnityCodePath)\%(RecursiveDir)%(Filename)%(Extension)')"
-                SkipUnchangedFiles="false"/>
-    </Target>
 </Project>
